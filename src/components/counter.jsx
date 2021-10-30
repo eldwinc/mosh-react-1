@@ -24,10 +24,18 @@ export default class Counter extends Component {
       </ul>
     );
   }
-  constructor() {
-    super(); //inherits everthing from Counter into this constructor func. in this case, we can access 'this' variable
-    console.log('constructor', this);
-  }
+  // constructor() {
+  //   super(); //inherits everthing from Counter into this constructor func. in this case, we can access 'this' variable
+  //   console.log('constructor', this);
+  //   this.handleIncrement = this.handleIncrement.bind(this);
+  // }
+  handleIncrement = (product) => {
+    //arrow func inherits 'this' variable so we never have to .bind(this)
+    // console.log('Increament Clicked', this)
+    console.log('product: ', product);
+
+    this.setState({ count: this.state.count + 1 }); // this.state.count++ //this doesnt work bc react isnt aware of variable change, we have to explicitly tell react whats changed
+  };
   render() {
     return (
       <div>
@@ -38,7 +46,7 @@ export default class Counter extends Component {
         </span>
         <button
           className="btn btn-secondary btn-sm"
-          onClick={this.handleIncrement} //only references func, not calls
+          onClick={(product) => this.handleIncrement(product)} //only references func, not calls
         >
           Increment
         </button>
@@ -48,9 +56,7 @@ export default class Counter extends Component {
       </div>
     );
   }
-  handleIncrement() {
-    console.log('Increament Clicked', this.state.count);
-  }
+
   getBadgeClasses() {
     let classes = 'badge m-2 badge-';
     classes += this.state.count === 0 ? 'warning' : 'primary';
